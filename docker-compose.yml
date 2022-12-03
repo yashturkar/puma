@@ -17,4 +17,4 @@ services:
     working_dir: /apps
     volumes:
       - ./apps/:/apps:rw
-      - ${DATASETS}:/data:ro
+      - ${DATASETS}:/data:rw

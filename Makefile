@@ -10,7 +10,7 @@ container: check-env check-config
 	@echo You can run \"make run\" to test the docker installation now.
 
 run: check-env
-	@echo Mounting\(read-only \) ${DATASETS} to /data.
+	@echo Mounting\(read-write \) ${DATASETS} to /data.
 	@echo Mounting\(read-write\) $(shell realpath apps/) to /apps/
 	@docker-compose run --rm apps
 

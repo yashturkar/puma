@@ -4,7 +4,7 @@ import glob
 import os
 from collections import deque
 from pathlib import Path
-
+import sys
 import click
 import numpy as np
 import open3d as o3d
@@ -30,36 +30,37 @@ from puma.utils import (
     default="config/puma.yml",
     help="Path to the config file",
 )
-@click.option(
-    "--dataset",
-    "-d",
-    type=click.Path(exists=True),
-    default=os.environ["HOME"] + "/data/kitti-odometry/ply/",
-    help="Location of the KITTI-like dataset",
-)
-@click.option(
-    "--n_scans",
-    "-n",
-    type=int,
-    default=-1,
-    required=False,
-    help="Number of scans to integrate",
-)
-@click.option(
-    "--sequence",
-    "-s",
-    type=str,
-    default=None,
-    required=False,
-    help="Sequence number",
-)
+# @click.option(
+#     "--dataset",
+#     "-d",
+#     type=click.Path(exists=True),
+#     default=os.environ["HOME"] + "/data/kitti-odometry/ply/",
+#     help="Location of the KITTI-like dataset",
+# )
+# @click.option(
+#     "--n_scans",
+#     "-n",
+#     type=int,
+#     default=-1,
+#     required=False,
+#     help="Number of scans to integrate",
+# )
+# @click.option(
+#     "--sequence",
+#     "-s",
+#     type=str,
+#     default=None,
+#     required=False,
+#     help="Sequence number",
+# )
 @click.option(
     "--odometry_only",
     is_flag=True,
     default=False,
     help="Run odometry only pipeline",
 )
-def main(config, dataset, n_scans, sequence, odometry_only):
+# def main(config, dataset, n_scans, sequence, odometry_only):
+def main(config,odometry_only):
     """This script to run the full puma pipeline as described in the paper. It
     assumes you have the data in the kitti-like format and all the scans where
     already pre-converted to '.ply', for example:
@@ -86,27 +87,33 @@ def main(config, dataset, n_scans, sequence, odometry_only):
     config = load_config_from_yaml(config)
     if config.debug:
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
-    dataset = os.path.join(dataset, "")
-    os.makedirs(config.out_dir, exist_ok=True)
+    # dataset = os.path.join(dataset, "")
+    # os.makedirs(config.out_dir, exist_ok=True)
 
-    map_name = Path(dataset).parent.name
-    map_name += "_" + sequence
-    map_name += "_depth_" + str(config.depth)
-    map_name += "_cropped" if config.min_density else ""
-    map_name += "_" + config.method
-    map_name += "_" + config.strategy
+    # map_name = Path(dataset).parent.name
+    # map_name += "_" + sequence
+    # map_name += "_depth_" + str(config.depth)
+    # map_name += "_cropped" if config.min_density else ""
+    # map_name += "_" + config.method
+    # map_name += "_" + config.strategy
 
-    # Save config
-    config_file = map_name + ".yml"
-    config_file = os.path.join(config.out_dir, config_file)
-    save_config_yaml(config_file, dict(config))
+    # # Save config
+    # config_file = map_name + ".yml"
+    # config_file = os.path.join(config.out_dir, config_file)
+    # save_config_yaml(config_file, dict(config))
 
-    poses_file = map_name + ".txt"
-    poses_file = os.path.join(config.out_dir, poses_file)
-    print("Results will be saved to", poses_file)
+    # poses_file = map_name + ".txt"
+    # poses_file = os.path.join(config.out_dir, poses_file)
+    # print("Results will be saved to", poses_file)
 
-    scans = os.path.join(dataset, "sequences", sequence, "velodyne", "")
+    # scans = os.path.join(dataset, "sequences", sequence, "velodyne", "")
+
+    n_scans = 50
+    print("Foo")
+    scans = '../data/mai_data/'
+    print(os.listdir('../data/mai_data'))
     scan_names = sorted(glob.glob(scans + "*.ply"))
+    print(scan_names)
 
     # Use the whole sequence if -1 is specified
     n_scans = len(scan_names) if n_scans == -1 else n_scans
