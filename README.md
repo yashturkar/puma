@@ -1,3 +1,6 @@
+## Args commented, change path in apps/slam/pipeline
+
+
 # Poisson Surface Reconstruction for LiDAR Odometry and Mapping <!-- omit in toc -->
 
 |        Surfels         |          TSDF          |      Our Approach      |
