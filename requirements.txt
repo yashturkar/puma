@@ -1,9 +1,0 @@
-Click
-PyYAML
-easydict
-matplotlib
-numpy
-open3d>=0.14
-pykitti
-tqdm
-trimesh
